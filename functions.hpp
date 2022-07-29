@@ -56,28 +56,28 @@ std::string compress(std::string& text) {
     return text;
 }
 
-//decompress not working
+//decompress half way there
 std::string decompress(std::string text) {
     std::vector<char> vec;
     std::string tmp = "";
     int j = 1;
-    for (int i = 0; i < text.size(); ++i) {
-            char currsymb = text[i];
-            tmp += text[j];
-            int count = my_stoi(tmp);
-
-                if (is_number(tmp)) {
-                    while (count != 0) {
-                    vec.push_back(currsymb);
-                    --count;
-                }
-                } else if (!is_number(tmp)) {
-                    vec.push_back(currsymb);
-                }
-            if (i % 2 != 0 && !is_number(currsymb)) {
-                vec.push_back(currsymb);
+    
+    int size = text.size();
+    for (int i = 0, j = 1; i < size; i += 2, ++j) {
+        tmp += text[j];
+        int count = my_stoi(tmp); 
+        if (is_number(tmp)) {
+            count = count % 10;
+            while (count != 0) {
+                vec.push_back(text[i]);
+                --count;
             }
-        
+        }
+        if (!is_number(tmp)) {
+            vec.push_back(text[i]);
+        }
+
+        ++j;
     }
 }
 
