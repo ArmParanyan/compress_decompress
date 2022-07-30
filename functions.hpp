@@ -57,28 +57,32 @@ std::string compress(std::string& text) {
 }
 
 //decompress half way there
-std::string decompress(std::string text) {
-    std::vector<char> vec;
-    std::string tmp = "";
-    int j = 1;
-    
+std::string decompress(std::string& text) {
+    std::string str = "";
     int size = text.size();
-    for (int i = 0, j = 1; i < size; i += 2, ++j) {
-        tmp += text[j];
-        int count = my_stoi(tmp); 
-        if (is_number(tmp)) {
-            count = count % 10;
-            while (count != 0) {
-                vec.push_back(text[i]);
-                --count;
-            }
+    for (int i = 0; i < size; ++i) {
+        char currentsymbol = text[i];
+        std::string tmp = "";
+        int count = 0;
+        int j = i + 1;
+        while (is_number(text[j + 1])) {
+            tmp.push_back(text[j]);
+            count = my_stoi(tmp);
+            ++j;   
         }
-        if (!is_number(tmp)) {
-            vec.push_back(text[i]);
+        i = j - 1;
+        if (0 == count) {
+            str.push_back(currentsymbol);
+        }   
+        int k = 0;
+        while (k <= count) {
+            str.push_back(currentsymbol);
+            ++k;
         }
-
-        ++j;
     }
+    text = {};
+    text += str;
+    return str;
 }
 
 
