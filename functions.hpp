@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 
-//checks if the given string is nubmer or not
 bool is_number(std::string num) {
     for (int i = 0; i < num.length(); ++i)
     {
@@ -14,13 +13,19 @@ bool is_number(std::string num) {
     }
     return true;
 }
+bool is_symbol(char num)
+{
+    if (num > '9' || num < '0')
+    {
+        return true;
+    }
+    return false;
+}
 
-//checks if the given char is number or not
 bool is_number(char num) {
     return (num > '9' || num < '1');
 }
 
-//convert's string to int
 int my_stoi (std::string num)
 {
    int result = -1;
@@ -37,7 +42,7 @@ int my_stoi (std::string num)
     return result/10;
 }
 
-//compressing the given string
+//compress
 std::string compress(std::string& text) {
     int size = text.size();
     std::string compressed {};
@@ -58,34 +63,43 @@ std::string compress(std::string& text) {
     return text;
 }
 
-//decompressing the given string
+//decompress not working
 std::string decompress(std::string& text) {
     std::string str = "";
     int size = text.size();
     for (int i = 0; i < size; ++i) {
         char currentsymbol = text[i];
         std::string tmp = "";
-        tmp.push_back(text[i + 1]);
-        if (is_number(tmp))
+        if (is_symbol(text[i + 1]))
         {
-            int count  = my_stoi(tmp);
-            while(count > 0)
-            {
+            tmp.push_back(text[i + 1]);
+        }
+        while (!is_symbol(text[i + 1]) )
+        {
+            tmp.push_back(text[i + 1]);
+            ++i;
+        }
+        
+        if (is_number(tmp)) {
+            int count = my_stoi(tmp);
+            
+            while(count) {
                 str.push_back(currentsymbol);
                 --count;
             }
         }
-        else if (is_number(currentsymbol))
-        {
+        else if (is_symbol(currentsymbol)) {
+            
             str.push_back(currentsymbol);
         }
     }
+    
     return str;
 }
 
 
 
-//copressing what is in the file
+//file copression
 void file_compresed() {
     std::ifstream fin;
     std::ofstream fout;
@@ -101,7 +115,7 @@ void file_compresed() {
     }
 }
 
-//decopressing what is in the file
+//file decompressetion
 void file_decompresed() {
     std::ifstream fin;
     std::ofstream fout;
