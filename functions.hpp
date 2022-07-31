@@ -34,7 +34,6 @@ int my_stoi (std::string num)
     return result/10;
 }
 
-
 //compress
 std::string compress(std::string& text) {
     int size = text.size();
@@ -56,32 +55,28 @@ std::string compress(std::string& text) {
     return text;
 }
 
-//decompress half way there
+//decompress
 std::string decompress(std::string& text) {
     std::string str = "";
     int size = text.size();
     for (int i = 0; i < size; ++i) {
         char currentsymbol = text[i];
         std::string tmp = "";
-        int count = 0;
-        int j = i + 1;
-        while (is_number(text[j + 1])) {
-            tmp.push_back(text[j]);
-            count = my_stoi(tmp);
-            ++j;   
+        tmp.push_back(text[i + 1]);
+        if (is_number(tmp))
+        {
+            int count  = my_stoi(tmp);
+            while(count > 0)
+            {
+                str.push_back(currentsymbol);
+                --count;
+            }
         }
-        i = j - 1;
-        if (0 == count) {
+        else if (is_number(currentsymbol))
+        {
             str.push_back(currentsymbol);
-        }   
-        int k = 0;
-        while (k <= count) {
-            str.push_back(currentsymbol);
-            ++k;
         }
     }
-    text = {};
-    text += str;
     return str;
 }
 
@@ -113,12 +108,12 @@ void file_decompresed() {
     if (fin.is_open() && fout.is_open()) {
         text = {};
         while (!fin.eof()) {
-            getline(fin, text);
+            fin >> text;
+            //getline(fin, text);
             fout << decompress(text) << std::endl;
         }
     }
 }
-
 
 // comprasse or decomprasse file
 void what_to_do_whith_file() {
@@ -134,12 +129,13 @@ void what_to_do_whith_file() {
         std::cout << std::endl;
     } while ((choice != '1' && choice != '2'));  
 
-    if (choice == '1') {
+    switch (choice)
+    {
+    case '1':
         file_compresed();
-        return;
-    }  
-    if (choice == '2') {
+        break;
+    case '2':
         file_decompresed();
-        return;
+        break;
     }
 }
