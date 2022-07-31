@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 
+//checks if the given string is nubmer or not
 bool is_number(std::string num) {
     for (int i = 0; i < num.length(); ++i)
     {
@@ -14,10 +15,12 @@ bool is_number(std::string num) {
     return true;
 }
 
+//checks if the given char is number or not
 bool is_number(char num) {
     return (num > '9' || num < '1');
 }
 
+//convert's string to int
 int my_stoi (std::string num)
 {
    int result = -1;
@@ -34,7 +37,7 @@ int my_stoi (std::string num)
     return result/10;
 }
 
-//compress
+//compressing the given string
 std::string compress(std::string& text) {
     int size = text.size();
     std::string compressed {};
@@ -55,7 +58,7 @@ std::string compress(std::string& text) {
     return text;
 }
 
-//decompress
+//decompressing the given string
 std::string decompress(std::string& text) {
     std::string str = "";
     int size = text.size();
@@ -82,7 +85,7 @@ std::string decompress(std::string& text) {
 
 
 
-//file copression
+//copressing what is in the file
 void file_compresed() {
     std::ifstream fin;
     std::ofstream fout;
@@ -98,7 +101,7 @@ void file_compresed() {
     }
 }
 
-//file decompressetion
+//decopressing what is in the file
 void file_decompresed() {
     std::ifstream fin;
     std::ofstream fout;
