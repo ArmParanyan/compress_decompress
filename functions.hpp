@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 
+//checks if the string is number or not
 bool is_number(std::string num) {
     for (int i = 0; i < num.length(); ++i)
     {
@@ -13,19 +14,22 @@ bool is_number(std::string num) {
     }
     return true;
 }
+
+//checks if the symbol is not number;
 bool is_symbol(char num)
 {
-    if (num > '9' || num < '0')
-    {
+    if (num > '9' || num < '0') {
         return true;
     }
     return false;
 }
 
+//checks if the symbol is number or not
 bool is_number(char num) {
     return (num > '9' || num < '1');
 }
 
+//converts string to integer
 int my_stoi (std::string num)
 {
    int result = -1;
@@ -42,7 +46,7 @@ int my_stoi (std::string num)
     return result/10;
 }
 
-//compress
+//compresses the given string
 std::string compress(std::string& text) {
     int size = text.size();
     std::string compressed {};
@@ -63,23 +67,20 @@ std::string compress(std::string& text) {
     return text;
 }
 
-//decompress not working
+//decompresses the given string
 std::string decompress(std::string& text) {
     std::string str = "";
     int size = text.size();
     for (int i = 0; i < size; ++i) {
         char currentsymbol = text[i];
         std::string tmp = "";
-        if (is_symbol(text[i + 1]))
-        {
+        if (is_symbol(text[i + 1])) {
             tmp.push_back(text[i + 1]);
         }
-        while (!is_symbol(text[i + 1]) )
-        {
+        while (!is_symbol(text[i + 1])) {
             tmp.push_back(text[i + 1]);
             ++i;
         }
-        
         if (is_number(tmp)) {
             int count = my_stoi(tmp);
             
@@ -97,8 +98,6 @@ std::string decompress(std::string& text) {
     return str;
 }
 
-
-
 //file copression
 void file_compresed() {
     std::ifstream fin;
@@ -106,7 +105,7 @@ void file_compresed() {
     std::string text;
     fin.open("input.txt");
     fout.open("output.txt");
-    if (fin.is_open() && fout.is_open()) {
+    if (fin.is_open()) {
         text = {};
         while (!fin.eof()) {
             getline(fin, text);
@@ -122,17 +121,16 @@ void file_decompresed() {
     std::string text;
     fin.open("input.txt");
     fout.open("output.txt");
-    if (fin.is_open() && fout.is_open()) {
+    if (fin.is_open()) {
         text = {};
         while (!fin.eof()) {
-            fin >> text;
-            //getline(fin, text);
-            fout << decompress(text) << std::endl;
+            getline(fin, text);
+            fout << decompress(text) << " ";
         }
     }
 }
 
-// comprasse or decomprasse file
+// user choices what to do with file
 void what_to_do_whith_file() {
   
     char choice = '0';
