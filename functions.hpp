@@ -48,23 +48,21 @@ int my_stoi (std::string num)
 
 //compresses the given string
 std::string compress(std::string& text) {
+    std::unordered_map<char, int> map;
     int size = text.size();
-    std::string compressed {};
-    for (int i = 0; i < size;  ++i) {
-        char current_symbol = text[i];
-        int count = 1;
-        while (text[i + 1] == current_symbol) {
-            ++count;
-            ++i;
-        }
-        compressed += current_symbol;
-        if (count >= 2) {
-            compressed += std::to_string(count);
+    std::string str = "";
+    for (int i = 0; i < size; ++i) {
+        ++map[text[i]];
+    }
+    for (int i = 0; i < size; ++i) {
+        char currsymb = text[i];
+        if  (map[text[i]]) { 
+            str += currsymb;
+            str += std::to_string(map[text[i]]);
+            map[text[i]] = 0;
         }
     }
-    text = {};
-    text += compressed;
-    return text;
+    return str;
 }
 
 //decompresses the given string
